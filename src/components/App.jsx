@@ -12,19 +12,14 @@ export class App extends Component {
     bad: 0,
   };
 
-  handleIncrement = event => {
-    if (event.target.name === 'good') {
-      this.setState(prevState => ({ good: prevState.good + 1 }));
-    }
-
-    if (event.target.name === 'neutral') {
-      this.setState(prevState => ({ neutral: prevState.neutral + 1 }));
-    }
-
-    if (event.target.name === 'bad') {
-      this.setState(prevState => ({ bad: prevState.bad + 1 }));
-    }
+  handleIncrement = option => {
+    this.setState(prevState => {
+      return {
+        [option]: prevState[option] + 1,
+      };
+    });
   };
+
   countTotalFeedback = () => {
     return Object.values(this.state).reduce((previousValue, number) => {
       return previousValue + number;
@@ -35,7 +30,7 @@ export class App extends Component {
     if (this.countTotalFeedback() === 0) {
       return 0;
     } else {
-      return ((this.state.good * 100) / this.countTotalFeedback()).toFixed(2);
+      return Math.round((this.state.good * 100) / this.countTotalFeedback());
     }
   };
 
